@@ -1,6 +1,6 @@
 extends RigidBody2D
 var is_held = false
-var follow_strength = 10
+export var follow_mouse_strength = 50
 
 signal clicked
 
@@ -16,7 +16,7 @@ func _physics_process(delta):
 	if is_held:
 		set_axis_velocity(
 			(get_global_mouse_position()-self.global_position)
-			* follow_strength)
+			* follow_mouse_strength)
 
 func pickup():
 	if is_held:

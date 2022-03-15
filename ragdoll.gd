@@ -1,10 +1,8 @@
 extends Node2D
-var stand_force = 70
-onready var head = $head
-onready var rleg = $"r leg 2"
-onready var lleg = $"l leg 2"
 var parts_touching_ground = []
+var upper_body_parts = []
 var held_object = null
+var stand_force = 10
 
 func _ready():
 	for i in get_children():
@@ -12,13 +10,24 @@ func _ready():
 			i.connect("body_entered", self, "hit_object")
 			i.connect("body_exited", self, "stop_touching")
 			i.connect("clicked", self, "_on_bodypart_clicked")
+			if not "leg" in i.name and not "hand" in i.name:
+				upper_body_parts.append(i)
 
 func _process(delta):
-	print(stand_force)
 	if not parts_touching_ground.empty():
-		head.set_axis_velocity(Vector2.UP*stand_force)
-		rleg.set_axis_velocity(-Vector2.UP*stand_force)
-		lleg.set_axis_velocity(-Vector2.UP*stand_force)
+		stand()
+	else:
+		fall()
+
+func stand():
+	for i in upper_body_parts:
+		i.gravity_scale = -stand_force*.5
+	$"r leg 2".gravity_scale = stand_force
+	$"l leg 2".gravity_scale = stand_force
+
+func fall():
+	for i in upper_body_parts:
+		i.gravity_scale = 1
 
 func hit_object(body):
 	if body.is_in_group("ground"):
