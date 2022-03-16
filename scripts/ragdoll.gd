@@ -1,6 +1,5 @@
 extends Node2D
 var parts_touching_ground = []
-var upper_body_parts = []
 var alive = true
 var held_object = null
 var stand_force = 10
@@ -13,29 +12,10 @@ func _ready():
 			i.connect("body_exited", self, "stop_touching")
 			i.connect("clicked", self, "_on_bodypart_clicked")
 			i.connect("died", self, "_on_part_died")
-			if not "leg" in i.name and not "hand" in i.name:
-				upper_body_parts.append(i)
 
 func _physics_process(delta):
-#	if not alive:
-#		fall()
-#		set_process(false)
-	if not parts_touching_ground.empty():
-		stand()
-	else:
-		fall()
-
-func stand():
-	for i in upper_body_parts:
-		i.gravity_scale = -stand_force*.5
-	if is_instance_valid($"r leg 2"):
-		$"r leg 2".gravity_scale = stand_force
-	if is_instance_valid($"l leg 2"):
-		$"l leg 2".gravity_scale = stand_force
-
-func fall():
-	for i in upper_body_parts:
-		i.gravity_scale = 1
+	if not alive:
+		set_process(false)
 
 func hit_object(body):
 	if body.is_in_group("ground"):
@@ -58,5 +38,4 @@ func _on_bodypart_clicked(object):
 		held_object.pickup()
 
 func _on_part_died(part):
-	upper_body_parts.erase(part)
 	alive=false
