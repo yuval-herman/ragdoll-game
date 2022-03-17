@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "Helpers",
+"language": "GDScript",
+"path": "res://scripts/helpers.gd"
+}, {
+"base": "Reference",
+"class": "Tree_node",
+"language": "GDScript",
+"path": "res://scripts/tree_node.gd"
+} ]
+_global_script_class_icons={
+"Helpers": "",
+"Tree_node": ""
+}
+
 [application]
 
 config/name="ragdoll game"

@@ -13,12 +13,12 @@ func _process(delta):
 func _ready():
 	add_to_group("body_part", true)
 	connect("body_entered", self, "hit_object")
-	
+
 func _input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
 			emit_signal("clicked", self)
-			
+
 func _physics_process(delta):
 	if is_held:
 		set_axis_velocity(
@@ -37,14 +37,7 @@ func pickup():
 func drop():
 	is_held = false
 
-func sum(arr):
-	var ret=0
-	for i in arr:
-		ret+=i
-	return ret
-
 func hit_object(body):
 	if not body.is_in_group("body_part"):
-		var strength = sum(linear_velocity)/100
+		var strength = Helpers.sum(linear_velocity)/50
 		life-=strength
-		print(name,strength,life)
