@@ -54,6 +54,9 @@ tile_data = PoolIntArray( -2293765, 0, 0, -2293764, 0, 0, -2293763, 0, 0, -22937
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 2, 2 )
+limit_left = -320
+limit_bottom = 576
+limit_smoothed = true
 smoothing_enabled = true
 script = ExtResource( 3 )
 push_speed = 20
