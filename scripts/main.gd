@@ -6,9 +6,9 @@ onready var pin = load("res://scenes/worldPin.tscn")
 
 func _input(event):
 	if event.is_action_pressed("mode drag"):
-		mouseMode = MouseModes.DRAG
+		change_mouse_mode(MouseModes.DRAG)
 	elif event.is_action_pressed("mode pin"):
-		mouseMode = MouseModes.PIN
+		change_mouse_mode(MouseModes.PIN)
 	elif event.is_action_pressed("slomo"):
 		toggle_slomo()
 	elif event.is_action_released("slomo"):
@@ -21,6 +21,10 @@ func _input(event):
 		zoom(2)
 	elif event.is_action_pressed("left click") and mouseMode == MouseModes.PIN:
 		spawn_pin()
+
+func change_mouse_mode(mode):
+	mouseMode = mode
+	$CanvasLayer/mouseModeLable.text = MouseModes.keys()[mode]
 
 func spawn_pin():
 	var newPin = pin.instance()

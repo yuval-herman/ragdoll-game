@@ -14,7 +14,7 @@ func _ready():
 			i.connect("clicked", self, "_on_bodypart_clicked")
 			i.connect("died", self, "_on_part_died")
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if not alive:
 		set_process(false)
 
@@ -62,5 +62,5 @@ func _on_bodypart_clicked(object):
 		held_object = object
 		held_object.pickup()
 
-func _on_part_died(part):
+func _on_part_died(_part):
 	alive=false

@@ -6,7 +6,7 @@ export var life = 100
 signal clicked
 signal died
 
-func _process(delta):
+func _process(_delta):
 	if life <= 0:
 		die()
 
@@ -14,12 +14,12 @@ func _ready():
 	add_to_group("body_part", true)
 	connect("body_entered", self, "hit_object")
 
-func _input_event(viewport, event, shape_idx):
+func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
 			emit_signal("clicked", self)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if is_held:
 		set_axis_velocity(
 			(get_global_mouse_position()-self.global_position)
