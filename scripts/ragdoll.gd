@@ -1,5 +1,4 @@
 extends Node2D
-var ground_being_touched = []
 var touching_ground = []
 onready var body_parts = get_tree().get_nodes_in_group("body_part")
 var alive = true
@@ -21,38 +20,35 @@ func _physics_process(delta):
 
 func hit_object(body, rigidbody):
 	if body.is_in_group("ground"):
-		ground_being_touched.append(body)
-		touching_ground.append(rigidbody)
+		touching_ground.append([rigidbody, body])
 		for body in body_parts:
 			if is_instance_valid(body):
 				body.gravity_scale = -stand_force/5
 			else:
 				body_parts.erase(body)
-		for body in touching_ground:
-			if is_instance_valid(body):
-				body.gravity_scale = stand_force*2
+		for pair in touching_ground:
+			if is_instance_valid(pair[0]):
+				pair[0].gravity_scale = stand_force*2
 			else:
-					touching_ground.erase(body)
+					touching_ground.erase(pair)
 
 func stop_touching(body, rigidbody):
 	if body.is_in_group("ground"):
-		ground_being_touched.erase(body)
-		touching_ground.erase(rigidbody)
+		touching_ground.erase([rigidbody, body])
 		if touching_ground:
 			for body in body_parts:
 				if is_instance_valid(body):
 					body.gravity_scale = -stand_force/5
 				else:
 					body_parts.erase(body)
-			for body in touching_ground:
-				if is_instance_valid(body):
-					body.gravity_scale = stand_force*2
+			for pair in touching_ground:
+				if is_instance_valid(pair[0]):
+					pair[0].gravity_scale = stand_force*2
 				else:
-					touching_ground.erase(body)
+					touching_ground.erase(pair)
 		else:
 			for body in body_parts:
 				body.gravity_scale = 1
-		
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
@@ -68,3 +64,4 @@ func _on_bodypart_clicked(object):
 
 func _on_part_died(part):
 	alive=false
+	
