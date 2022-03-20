@@ -1,16 +1,21 @@
 extends Node
 var is_slomo = false
-var mouseMode = 1
+enum MouseModes {DRAG, PIN}
+var mouseMode = MouseModes.DRAG
 onready var pin = load("res://scenes/worldPin.tscn")
 
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
-			if mouseMode == 1:
+			if mouseMode == MouseModes.PIN:
 				var newPin = pin.instance()
 				newPin.global_position = $Camera2D.get_global_mouse_position()
 				add_child(newPin)
 	
+	elif event.is_action_pressed("mode drag"):
+		mouseMode = MouseModes.DRAG
+	elif event.is_action_pressed("mode pin"):
+		mouseMode = MouseModes.PIN
 	elif event.is_action_pressed("ui_select"):
 		if is_slomo:
 			Engine.time_scale = 1
