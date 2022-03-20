@@ -5,6 +5,7 @@
 [sub_resource type="CircleShape2D" id=1]
 
 [node name="pin" type="RigidBody2D"]
+pause_mode = 2
 mode = 1
 script = ExtResource( 1 )
 

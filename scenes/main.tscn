@@ -41,6 +41,7 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 0/z_index = 0
 
 [node name="Node" type="Node"]
+pause_mode = 2
 script = ExtResource( 4 )
 
 [node name="ragdoll" parent="." instance=ExtResource( 2 )]

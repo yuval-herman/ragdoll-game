@@ -64,4 +64,3 @@ func _on_bodypart_clicked(object):
 
 func _on_part_died(part):
 	alive=false
-	

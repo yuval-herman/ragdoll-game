@@ -7,3 +7,8 @@ static func sum(arr):
 	for i in arr:
 		ret+=i
 	return ret
+
+static func wait_for_unpause(tree):
+	yield(tree, "idle_frame")
+	while(tree.paused):
+		yield(tree, "idle_frame")
