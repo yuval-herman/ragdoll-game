@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="2.6458333mm"
+   height="5.291666mm"
+   viewBox="0 0 2.6458333 5.2916659"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (76b9e6a115, 2022-02-25)"
+   sodipodi:docname="bullet.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="false"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-bbox="false"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:bbox-nodes="true"
+     inkscape:bbox-paths="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-others="false"
+     inkscape:zoom="3.7543719"
+     inkscape:cx="-12.119204"
+     inkscape:cy="33.560873"
+     inkscape:window-width="1920"
+     inkscape:window-height="1007"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-97.436745,-107.31076)">
+    <rect
+       style="fill:#a08930;fill-opacity:1;stroke-width:0.0948897;stroke-linecap:round;stroke-linejoin:round"
+       id="rect846"
+       width="2.6458333"
+       height="3.8371291"
+       x="97.436745"
+       y="108.7653"
+       ry="0" />
+    <path
+       id="rect1634"
+       style="fill:#c3a73b;fill-opacity:1;stroke-width:0.256649;stroke-linecap:round;stroke-linejoin:round"
+       d="m 98.759624,107.31076 c -0.732895,0 -1.322876,0.64872 -1.322876,1.45454 h 2.645822 c 0,-0.80582 -0.59005,-1.45454 -1.322946,-1.45454 z" />
+  </g>
+</svg>

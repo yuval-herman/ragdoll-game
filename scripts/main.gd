@@ -1,8 +1,13 @@
 extends Node
 var is_slomo = false
+var held_object = null
 enum MouseModes {DRAG, PIN}
 var mouseMode = MouseModes.DRAG
 onready var pin = load("res://scenes/worldPin.tscn")
+
+func _ready():
+	for n in get_tree().get_nodes_in_group("dragablle"):
+		n.connect("clicked", self, "_on_clicked")
 
 func _input(event):
 	if event.is_action_pressed("mode drag"):
@@ -21,6 +26,15 @@ func _input(event):
 		zoom(2)
 	elif event.is_action_pressed("left click") and mouseMode == MouseModes.PIN:
 		spawn_pin()
+	elif event.is_action_released("left click"):
+		if is_instance_valid(held_object) and held_object:
+			held_object.drop()
+			held_object = null
+
+func _on_clicked(object):
+	if !held_object:
+		held_object = object
+		held_object.pickup()
 
 func change_mouse_mode(mode):
 	mouseMode = mode
