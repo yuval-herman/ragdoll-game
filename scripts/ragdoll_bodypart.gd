@@ -9,10 +9,14 @@ func _process(_delta):
 
 func _ready():
 	connect("body_entered", self, "hit_object")
+	add_to_group("body_part")
 
 func die():
 	emit_signal("died", self)
 	queue_free()
+
+func hit(damage):
+	life-=damage
 
 func hit_object(body):
 	if not body.is_in_group("body_part"):
