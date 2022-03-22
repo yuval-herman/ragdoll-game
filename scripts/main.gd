@@ -32,7 +32,7 @@ func _input(event):
 			held_object = null
 
 func _on_clicked(object):
-	if !held_object:
+	if mouseMode == MouseModes.DRAG and !held_object:
 		held_object = object
 		held_object.pickup()
 

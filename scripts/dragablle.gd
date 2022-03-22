@@ -17,7 +17,6 @@ func _input_event(_viewport, event, _shape_idx):
 func _physics_process(_delta):
 	var mp = get_global_mouse_position()
 	if is_held:
-		print(is_held)
 		var dir_force = (mp-global_position)*follow_mouse_strength
 		linear_damp = 20
 		set_axis_velocity(dir_force)

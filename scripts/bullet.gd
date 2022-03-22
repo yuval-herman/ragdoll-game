@@ -24,4 +24,5 @@ func check_future():
 func hit_body(body):
 	if body.is_in_group("body_part"):
 		body.hit(damage)
+		body.bleed(tan(rotation))
 	queue_free()

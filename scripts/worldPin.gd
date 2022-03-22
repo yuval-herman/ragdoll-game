@@ -12,11 +12,11 @@ func _ready():
 	if not pinned_object:
 		queue_free()
 		return
-	reparentPinned(pinned_object[0])
+	pinn_object(pinned_object[0])
+	rem_area2D()
 
-func reparentPinned(obj: Node2D):
+func pinn_object(obj: Node2D):
 	$PinJoint2D.node_b=obj.get_path()
-	pass
 
 func rem_area2D(): #just a tiny free and easy performance save ;-)
 	var rem = $Area2D
