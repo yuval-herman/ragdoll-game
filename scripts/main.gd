@@ -27,7 +27,7 @@ func _input(event):
 	elif event.is_action_pressed("left click") and mouseMode == MouseModes.PIN:
 		spawn_pin()
 	elif event.is_action_released("left click"):
-		if is_instance_valid(held_object) and held_object:
+		if held_object and is_instance_valid(held_object):
 			held_object.drop()
 			held_object = null
 

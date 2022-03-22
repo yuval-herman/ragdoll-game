@@ -10,7 +10,7 @@ func shoot():
 	var bull = bullet.instance()
 	bull.rotation = rotation
 	bull.global_position = $muzzle.global_position
-	bull.speed = 10
+	bull.speed = 100
 	bull.damage = 10
 	$"/root".call_deferred("add_child" ,bull)
 
