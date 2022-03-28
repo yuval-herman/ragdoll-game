@@ -1,9 +1,19 @@
 extends "res://scripts/dragablle.gd"
-export (PackedScene) var bullet
+export (PackedScene) var bullet = preload("res://scenes/bullet.tscn")
 var shooting = false
-var shootrate = 45 #bigger=slower
+const shootrate = 30 #bigger=slower
 var wait_frames = 0
-var cluster_size = 5
+const cluster_size = 15
+var bulletPool = []
+var currBullet = 0
+const maxBullets = cluster_size*5
+
+func _ready():
+	for i in maxBullets:
+		bulletPool.append(bullet.instance())
+		bulletPool[i].damage = 10
+		bulletPool[i].speed = 100*rand_range(.98, 1.02)
+		$"/root".call_deferred("add_child" ,bulletPool[i])
 
 func _physics_process(_delta):
 	if wait_frames > 0:
@@ -11,17 +21,22 @@ func _physics_process(_delta):
 	elif shooting:
 		shoot()
 
+func take_bullet():
+	currBullet+=1
+	if currBullet == maxBullets:
+		currBullet=0
+	return bulletPool[currBullet]
+
 func shoot():
 	wait_frames = shootrate
-	for i in range(5):
-		var bull = bullet.instance()
+	for i in cluster_size:
+		var bull = take_bullet()
 		bull.rotation = rotation*rand_range(.98, 1.02)
 		bull.global_position = $muzzle.global_position
-		bull.speed = 100*rand_range(.98, 1.02)
-		bull.damage = 10
-		$"/root".call_deferred("add_child" ,bull)
+		bull.go()
 
-func _input(event):
+func _input_event(_viewport, event, _shape_idx):
+	._input_event(_viewport, event, _shape_idx)
 	if event.is_action_pressed("right click") and wait_frames == 0:
 		shoot()
 		shooting=true

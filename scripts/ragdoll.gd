@@ -1,55 +1,57 @@
 extends Node2D
 var touching_ground = []
-onready var body_parts = get_tree().get_nodes_in_group("body_part")
+onready var not_touching_ground = []
 var alive = true
 var stand_force = 5
+var stand_lower_force = 50
 var is_slomo = false
 
 func _ready():
+	set_process(false)
 	for i in get_children():
 		if i.is_in_group("body_part"):
+			not_touching_ground.append(i)
 			i.connect("body_entered", self, "hit_object", [i])
 			i.connect("body_exited", self, "stop_touching", [i])
 			i.connect("died", self, "_on_part_died")
 
-func _physics_process(_delta):
+func hit_object(otherbody, body):
 	if not alive:
-		set_process(false)
-
-func hit_object(body, rigidbody):
-	if body.is_in_group("ground"):
-		touching_ground.append([rigidbody, body])
-		for body in body_parts:
+		return
+	if otherbody.is_in_group("ground"):
+		touching_ground.append(body)
+		not_touching_ground.erase(body)
+		for body in not_touching_ground:
 			if is_instance_valid(body):
-				body.gravity_scale = -stand_force/5
+				body.gravity_scale = -stand_force
 			else:
-				body_parts.erase(body)
-		for pair in touching_ground:
-			if is_instance_valid(pair[0]):
-				pair[0].gravity_scale = stand_force*2
+				not_touching_ground.erase(body)
+		for body in touching_ground:
+			if is_instance_valid(body):
+				body.gravity_scale = stand_lower_force
 			else:
-					touching_ground.erase(pair)
+				touching_ground.erase(body)
 
-func stop_touching(body, rigidbody):
-	if body.is_in_group("ground"):
-		touching_ground.erase([rigidbody, body])
-		if touching_ground:
-			for body in body_parts:
-				if is_instance_valid(body):
-					body.gravity_scale = -stand_force/5
-				else:
-					body_parts.erase(body)
-			for pair in touching_ground:
-				if is_instance_valid(pair[0]):
-					pair[0].gravity_scale = stand_force*3
-				else:
-					touching_ground.erase(pair)
-		else:
-			for body in body_parts:
+func stop_touching(otherbody, body):
+	if not alive:
+		return
+	if otherbody == null or otherbody.is_in_group("ground"):
+		touching_ground.erase(body)
+		not_touching_ground.append(body)
+		if not touching_ground:
+			for body in not_touching_ground:
 				if is_instance_valid(body):
 					body.gravity_scale = 1
 				else:
-					body_parts.erase(body)
+					not_touching_ground.erase(body)
 
-func _on_part_died(_part):
+func fall(deadpart=null):
+	touching_ground.erase(deadpart)
+	not_touching_ground.erase(deadpart)
+	for body in touching_ground+not_touching_ground:
+		if is_instance_valid(body):
+			body.gravity_scale = 1
+
+func _on_part_died(part):
+	fall(part)
 	alive=false
