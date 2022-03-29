@@ -4,7 +4,7 @@ var held_object = null
 enum MouseModes {DRAG, PIN, SPAWN, BOX}
 var mouseMode = MouseModes.DRAG
 onready var pin = preload("res://scenes/worldPin.tscn")
-onready var boxGlove = preload("res://scenes/boxGlove.tscn")
+onready var boxGlove = preload("res://scenes/items/boxGlove.tscn")
 onready var spawnObj = preload("res://scenes/ragdoll.tscn")
 var spawning = false
 const spawRate = 10 # higer is slower
@@ -20,6 +20,11 @@ func _process(delta):
 
 func _init():
 	Singleton.main = self
+
+func _ready():
+	$"CanvasLayer/HSplitContainer/VBoxContainer/ItemList".add_item("ragdoll")
+	for item in Helpers.dir_contents("res://scenes/items/"):
+		$"CanvasLayer/HSplitContainer/VBoxContainer/ItemList".add_item(item.replace('.tscn', ''))
 
 func _input(event):
 	if event.is_action_pressed("mode drag"):
@@ -98,7 +103,7 @@ func pickup_held(obj):
 func change_mouse_mode(mode):
 	drop_held()
 	mouseMode = mode
-	$CanvasLayer/HBoxContainer/mouseModeLable.text = MouseModes.keys()[mode]
+	$"CanvasLayer/HSplitContainer/VBoxContainer/HBoxContainer/mouseModeLable".text = MouseModes.keys()[mode]
 
 func spawn_obj(Obj=spawnObj):
 	var newObj = Obj.instance()
@@ -122,14 +127,14 @@ func speedup():
 	time_scale *= 2
 	Engine.time_scale = time_scale
 	is_slomo = true
-	$CanvasLayer/HBoxContainer/speedlabel.text = str(Engine.time_scale)
+	$CanvasLayer/HSplitContainer/VBoxContainer/HBoxContainer/speedlabel.text = str(Engine.time_scale)
 
 func slowdown():
 	$Camera2D.smoothing_enabled = false
 	time_scale /= 2
 	Engine.time_scale = time_scale
 	is_slomo = true
-	$CanvasLayer/HBoxContainer/speedlabel.text = str(Engine.time_scale)
+	$CanvasLayer/HSplitContainer/VBoxContainer/HBoxContainer/speedlabel.text = str(Engine.time_scale)
 
 func toggle_slomo():
 	if is_slomo:
@@ -141,10 +146,10 @@ func toggle_slomo():
 		$Tween.interpolate_property(Engine, "time_scale", null, time_scale, 1.0)
 		$Tween.start()
 		$Camera2D.smoothing_enabled = false
-	$CanvasLayer/HBoxContainer/speedlabel.text = str(Engine.time_scale)
+	$CanvasLayer/HSplitContainer/VBoxContainer/HBoxContainer/speedlabel.text = str(Engine.time_scale)
 	is_slomo = !is_slomo
 
 
 func _on_Tween_tween_step(object, key, elapsed, value):
 	if object == Engine:
-		$CanvasLayer/HBoxContainer/speedlabel.text = str(Engine.time_scale)
+		$CanvasLayer/HSplitContainer/VBoxContainer/HBoxContainer/speedlabel.text = str(Engine.time_scale)

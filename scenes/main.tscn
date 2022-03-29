@@ -69,28 +69,40 @@ push_speed = 20
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer"]
+anchor_right = 0.154
+anchor_bottom = 1.0
 
-[node name="mouseModeLable" type="Label" parent="CanvasLayer/HBoxContainer"]
-margin_top = 3.0
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HSplitContainer"]
+margin_right = 157.696
+margin_bottom = 600.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HSplitContainer/VBoxContainer"]
+margin_right = 157.0
+margin_bottom = 33.0
+
+[node name="mouseModeLable" type="Label" parent="CanvasLayer/HSplitContainer/VBoxContainer/HBoxContainer"]
 margin_right = 76.0
-margin_bottom = 36.0
+margin_bottom = 33.0
 custom_constants/shadow_as_outline = 1
 custom_fonts/font = SubResource( 5 )
 text = "drag"
 uppercase = true
 
-[node name="speedlabel" type="Label" parent="CanvasLayer/HBoxContainer"]
+[node name="speedlabel" type="Label" parent="CanvasLayer/HSplitContainer/VBoxContainer/HBoxContainer"]
 margin_left = 80.0
-margin_top = 3.0
 margin_right = 96.0
-margin_bottom = 36.0
+margin_bottom = 33.0
 custom_constants/shadow_as_outline = 1
 custom_fonts/font = SubResource( 5 )
 text = "1"
 uppercase = true
+
+[node name="ItemList" type="ItemList" parent="CanvasLayer/HSplitContainer/VBoxContainer"]
+margin_top = 37.0
+margin_right = 157.0
+margin_bottom = 46.0
+auto_height = true
 
 [node name="Tween" type="Tween" parent="."]
 
