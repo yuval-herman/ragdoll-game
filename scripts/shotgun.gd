@@ -1,4 +1,4 @@
-extends "res://scripts/dragablle.gd"
+extends RigidBody2D
 export (PackedScene) var bullet = preload("res://scenes/bullet.tscn")
 var shooting = false
 const shootrate = 30 #bigger=slower
@@ -36,7 +36,6 @@ func shoot():
 		bull.go()
 
 func _input_event(_viewport, event, _shape_idx):
-	._input_event(_viewport, event, _shape_idx)
 	if event.is_action_pressed("right click") and wait_frames == 0:
 		shoot()
 		shooting=true

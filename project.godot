@@ -10,9 +10,19 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node",
+"class": "Draggable",
+"language": "GDScript",
+"path": "res://script components/draggable.gd"
+}, {
+"base": "Node",
 "class": "Helpers",
 "language": "GDScript",
 "path": "res://scripts/helpers.gd"
+}, {
+"base": "PinJoint2D",
+"class": "HoldPin",
+"language": "GDScript",
+"path": "res://scripts/holdPin.gd"
 }, {
 "base": "Reference",
 "class": "Tree_node",
@@ -20,7 +30,9 @@ _global_script_classes=[ {
 "path": "res://scripts/tree_node.gd"
 } ]
 _global_script_class_icons={
+"Draggable": "",
 "Helpers": "",
+"HoldPin": "",
 "Tree_node": ""
 }
 
@@ -33,6 +45,15 @@ config/icon="res://icon.png"
 [autoload]
 
 Singleton="*res://scripts/singleton.gd"
+
+[debug]
+
+gdscript/completion/autocomplete_setters_and_getters=true
+gdscript/warnings/unused_class_variable=true
+gdscript/warnings/unsafe_property_access=true
+gdscript/warnings/unsafe_method_access=true
+gdscript/warnings/unsafe_cast=true
+gdscript/warnings/unsafe_call_argument=true
 
 [input]
 

@@ -1,6 +1,7 @@
-extends "res://scripts/dragablle.gd"
+extends RigidBody2D
 export var life = 1000
 onready var blood = preload("res://scenes/blood.tscn")
+onready var draggable: Draggable = preload("res://script components/draggable.tscn").instance()
 var bloods = []
 var currBlood = 0
 const bloodMax = 3
@@ -8,6 +9,17 @@ const bloodMax = 3
 signal rclicked
 signal died
 var bodystate:Physics2DDirectBodyState
+
+func _ready():
+	for i in get_children():
+		if i.is_in_group("holdPin"):
+			connect("rclicked", i, "toggle")
+	for i in bloodMax:
+		bloods.push_back(blood.instance())
+		$"/root".call_deferred("add_child", bloods[i])
+	connect("body_entered", self, "hit_object")
+	add_to_group("body_part")
+	add_child(draggable)
 
 func _process(_delta):
 	if life <= 0:
@@ -19,18 +31,6 @@ func _integrate_forces(state):
 func _input_event(_viewport, event, _shape_idx):
 	if event.is_action_pressed("right click"):
 		emit_signal("rclicked")
-	else:
-		._input_event(_viewport, event, _shape_idx)
-
-func _ready():
-	for i in get_children():
-		if i.is_in_group("holdPin"):
-			connect("rclicked", i, "toggle")
-	for i in bloodMax:
-		bloods.push_back(blood.instance())
-		$"/root".call_deferred("add_child", bloods[i])
-	connect("body_entered", self, "hit_object")
-	add_to_group("body_part")
 
 func die():
 	emit_signal("died", self)

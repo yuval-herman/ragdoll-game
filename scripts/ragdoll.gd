@@ -4,7 +4,6 @@ onready var not_touching_ground = []
 var alive = true
 var stand_force = 5
 var stand_lower_force = 50
-var is_slomo = false
 
 func _ready():
 	set_process(false)

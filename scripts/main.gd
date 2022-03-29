@@ -80,6 +80,7 @@ func left_click_mode_handle(event):
 				drop_held()
 
 func _on_clicked(object):
+	print(object)
 	if mouseMode == MouseModes.PIN:
 		var npin = spawn_obj(pin)
 		npin.pinn_object(object)

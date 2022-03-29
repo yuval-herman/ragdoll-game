@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://script components/draggable.gd" type="Script" id=1]
+
+[node name="draggable" type="Node" groups=["components"]]
+script = ExtResource( 1 )

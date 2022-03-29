@@ -1,4 +1,6 @@
 extends PinJoint2D
+
+class_name HoldPin
 var pinned
 
 func _draw():
