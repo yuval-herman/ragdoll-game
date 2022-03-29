@@ -13,6 +13,18 @@ static func wait_for_unpause(tree):
 	while(tree.paused):
 		yield(tree, "idle_frame")
 
-static func is_outside_view_bounds(pos):
-	var scr_size = OS.get_screen_size()
-	return pos.x>scr_size.x or pos.x<0.0 or pos.y>scr_size.y or pos.y<0.0
+static func dir_contents(path) -> Array:
+	var files := []
+	var dir = Directory.new()
+	if dir.open(path) == OK:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if dir.current_is_dir():
+				print("Found directory: " + file_name)
+			else:
+				files.append(file_name)
+			file_name = dir.get_next()
+	else:
+		print("An error occurred when trying to access the path.")
+	return files
