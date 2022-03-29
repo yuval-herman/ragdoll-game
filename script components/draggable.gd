@@ -21,7 +21,6 @@ func _ready() -> void:
 func input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
-			print(1)
 			emit_signal("clicked", self)
 
 func _physics_process(_delta) -> void:
