@@ -18,9 +18,6 @@ func _process(delta):
 	if spawn_wait>0:
 		spawn_wait-=1
 
-func _ready():
-	get_tree().paused = true
-
 func _init():
 	Singleton.main = self
 
@@ -80,10 +77,9 @@ func left_click_mode_handle(event):
 				drop_held()
 
 func _on_clicked(object):
-	print(object)
 	if mouseMode == MouseModes.PIN:
 		var npin = spawn_obj(pin)
-		npin.pinn_object(object)
+		npin.pinn_object(object.get_parent()) #TODO: use a pinnable component?
 	elif mouseMode == MouseModes.DRAG:
 		pickup_held(object)
 
