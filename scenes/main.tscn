@@ -85,7 +85,7 @@ text = "drag"
 uppercase = true
 
 [node name="speedlabel" type="Label" parent="CanvasLayer/HBoxContainer"]
-margin_left = 130.0
+margin_left = 80.0
 margin_top = 3.0
 margin_right = 96.0
 margin_bottom = 36.0
