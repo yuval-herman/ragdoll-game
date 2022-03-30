@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/joint.gd" type="Script" id=1]
+
+[node name="joint" type="StaticBody2D"]
+script = ExtResource( 1 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+node_a = NodePath("..")
+
+[node name="Line2D" type="Line2D" parent="."]
