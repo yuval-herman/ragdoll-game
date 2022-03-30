@@ -5,22 +5,16 @@ const spawRate = 10 # higer is slower
 enum MouseModes {DRAG, PIN, SPAWN, BOX}
 
 var is_slomo = false
+var spawning = false
 var held_object = null
 var mouseMode = MouseModes.DRAG
-var spawning = false
+var items = []
 var spawn_wait = 0
 var time_scale = 1.0
 
 onready var pin = preload("res://scenes/worldPin.tscn")
 onready var boxGlove = preload("res://scenes/items/boxGlove.tscn")
 onready var spawnObj = preload("res://scenes/ragdoll.tscn")
-
-func _process(delta):
-	if spawning and spawn_wait<=0:
-		spawn_obj()
-		spawn_wait=spawRate
-	if spawn_wait>0:
-		spawn_wait-=1
 
 func _init():
 	Singleton.main = self
@@ -29,6 +23,13 @@ func _ready():
 	$"CanvasLayer/HSplitContainer/VBoxContainer/ItemList".add_item("ragdoll")
 	for item in Helpers.dir_contents(Singleton.ITEMS_PATH):
 		$"CanvasLayer/HSplitContainer/VBoxContainer/ItemList".add_item(item.replace('.tscn', ''))
+
+func _process(delta):
+	if spawning and spawn_wait<=0:
+		spawn_obj()
+		spawn_wait=spawRate
+	if spawn_wait>0:
+		spawn_wait-=1
 
 func _input(event):
 	if event.is_action_pressed("mode drag"):
