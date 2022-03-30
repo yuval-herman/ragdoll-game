@@ -9,7 +9,7 @@ var spawning = false
 var held_object = null
 var spawnObj = null
 var mouseMode = MouseModes.DRAG
-var items = [preload("res://scenes/ragdoll.tscn")]
+var items = ["res://scenes/ragdoll.tscn"]
 var spawn_wait = 0
 var time_scale = 1.0
 
@@ -20,7 +20,7 @@ func _init():
 	Singleton.main = self
 
 func _ready():
-	spawnObj = items[0]
+	spawnObj = load(items[0])
 	$"CanvasLayer/HSplitContainer/VBoxContainer/ItemList".add_item("ragdoll")
 	for item in Helpers.dir_contents(Singleton.ITEMS_PATH):
 		items.append(Singleton.ITEMS_PATH+item)

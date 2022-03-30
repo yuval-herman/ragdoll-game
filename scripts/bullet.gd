@@ -1,22 +1,10 @@
-extends Area2D
+extends Sprite
 var speed = 1
 export var damage = 1
 const maxLifeFrames = 50
 var lifeFrames = maxLifeFrames
 onready var rot = Vector2.UP.rotated(rotation)
-var shape_calculated = false
 const bias = 1/60.0
-
-func _ready():
-	connect("body_entered", self, "hit_body")
-	if not shape_calculated:
-		calc_shape()
-
-func calc_shape():
-	shape_calculated = true
-	$CollisionShape2D.shape.radius = 6
-	$CollisionShape2D.shape.height = speed
-	$CollisionShape2D.position.y -= speed/2
 
 func _physics_process(delta):
 	var db = delta/bias
@@ -25,7 +13,10 @@ func _physics_process(delta):
 		return
 	else:
 		lifeFrames-=1*db
+	$RayCast2D.cast_to.y = -speed*db
 	global_translate(speed*rot*db)
+	if $RayCast2D.is_colliding():
+		hit_body($RayCast2D.get_collider())
 
 func hit_body(body):
 	if body.is_in_group("body_part"):
@@ -36,8 +27,6 @@ func go():
 	lifeFrames = maxLifeFrames
 	rot = Vector2.UP.rotated(rotation)
 	show()
-	set_deferred("monitorable", true)
-	set_deferred("monitoring", true)
 	set_physics_process(true)
 	set_physics_process_internal(true)
 	set_process(true)
@@ -48,8 +37,6 @@ func go():
 
 func disapear():
 	hide()
-	set_deferred("monitorable", false)
-	set_deferred("monitoring", false)
 	set_physics_process(false)
 	set_physics_process_internal(false)
 	set_process(false)

@@ -15,7 +15,7 @@ polygon = PoolVector2Array( 207, -18, 210, 1, 210, 34, 189.4, 34, 98.8, 12, 93, 
 rotation = 1.5708
 texture = ExtResource( 1 )
 
-[node name="muzzle" type="Node2D" parent="."]
+[node name="muzzle" type="Position2D" parent="."]
 position = Vector2( 24, -216 )
 rotation = 1.5708
 

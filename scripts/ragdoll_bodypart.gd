@@ -64,5 +64,6 @@ func hit_object(body):
 		if strength < 1:
 			return
 		life-=strength
+		print(strength)
 		if strength>0:
 			bleed(strength, bodystate.get_contact_local_normal(0).angle()+PI/2)
