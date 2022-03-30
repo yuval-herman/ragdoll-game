@@ -7,21 +7,23 @@ enum MouseModes {DRAG, PIN, SPAWN, BOX}
 var is_slomo = false
 var spawning = false
 var held_object = null
+var spawnObj = null
 var mouseMode = MouseModes.DRAG
-var items = []
+var items = [preload("res://scenes/ragdoll.tscn")]
 var spawn_wait = 0
 var time_scale = 1.0
 
 onready var pin = preload("res://scenes/worldPin.tscn")
 onready var boxGlove = preload("res://scenes/items/boxGlove.tscn")
-onready var spawnObj = preload("res://scenes/ragdoll.tscn")
 
 func _init():
 	Singleton.main = self
 
 func _ready():
+	spawnObj = items[0]
 	$"CanvasLayer/HSplitContainer/VBoxContainer/ItemList".add_item("ragdoll")
 	for item in Helpers.dir_contents(Singleton.ITEMS_PATH):
+		items.append(Singleton.ITEMS_PATH+item)
 		$"CanvasLayer/HSplitContainer/VBoxContainer/ItemList".add_item(item.replace('.tscn', ''))
 
 func _process(delta):
@@ -31,7 +33,7 @@ func _process(delta):
 	if spawn_wait>0:
 		spawn_wait-=1
 
-func _input(event):
+func _unhandled_input(event):
 	if event.is_action_pressed("mode drag"):
 		change_mouse_mode(MouseModes.DRAG)
 	elif event.is_action_pressed("mode pin"):
@@ -158,3 +160,7 @@ func toggle_slomo():
 func _on_Tween_tween_step(object, key, elapsed, value):
 	if object == Engine:
 		$CanvasLayer/HSplitContainer/VBoxContainer/HBoxContainer/speedlabel.text = str(Engine.time_scale)
+
+
+func _on_ItemList_item_selected(index):
+	spawnObj=load(items[index]) # use ResourceLoader if problems arise...
