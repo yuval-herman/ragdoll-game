@@ -1,15 +1,19 @@
 extends Node2D
+
+const spawRate = 10 # higer is slower
+
+enum MouseModes {DRAG, PIN, SPAWN, BOX}
+
 var is_slomo = false
 var held_object = null
-enum MouseModes {DRAG, PIN, SPAWN, BOX}
 var mouseMode = MouseModes.DRAG
+var spawning = false
+var spawn_wait = 0
+var time_scale = 1.0
+
 onready var pin = preload("res://scenes/worldPin.tscn")
 onready var boxGlove = preload("res://scenes/items/boxGlove.tscn")
 onready var spawnObj = preload("res://scenes/ragdoll.tscn")
-var spawning = false
-const spawRate = 10 # higer is slower
-var spawn_wait = 0
-var time_scale = 1.0
 
 func _process(delta):
 	if spawning and spawn_wait<=0:
@@ -23,7 +27,7 @@ func _init():
 
 func _ready():
 	$"CanvasLayer/HSplitContainer/VBoxContainer/ItemList".add_item("ragdoll")
-	for item in Helpers.dir_contents("res://scenes/items/"):
+	for item in Helpers.dir_contents(Singleton.ITEMS_PATH):
 		$"CanvasLayer/HSplitContainer/VBoxContainer/ItemList".add_item(item.replace('.tscn', ''))
 
 func _input(event):
