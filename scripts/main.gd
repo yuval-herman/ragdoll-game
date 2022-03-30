@@ -2,7 +2,7 @@ extends Node2D
 
 const spawRate = 10 # higer is slower
 
-enum MouseModes {DRAG, PIN, SPAWN, BOX}
+enum MouseModes {DRAG, PIN, SPAWN, JOINT, BOX}
 
 var is_slomo = false
 var spawning = false
@@ -14,6 +14,7 @@ var spawn_wait = 0
 var time_scale = 1.0
 
 onready var pin = preload("res://scenes/worldPin.tscn")
+onready var joint = preload("res://scenes/joint.tscn")
 onready var boxGlove = preload("res://scenes/items/boxGlove.tscn")
 
 func _init():
@@ -42,6 +43,9 @@ func _unhandled_input(event):
 		change_mouse_mode(MouseModes.SPAWN)
 	elif event.is_action_pressed("mode box"):
 		change_mouse_mode(MouseModes.BOX)
+	elif event.is_action_pressed("mode joint"):
+		change_mouse_mode(MouseModes.JOINT)
+	
 	elif event.is_action_pressed("slomo"):
 		toggle_slomo()
 	elif event.is_action_released("speed up"):
@@ -50,12 +54,14 @@ func _unhandled_input(event):
 		slowdown()
 	elif event.is_action_released("pause"):
 		get_tree().paused = !get_tree().paused;
+	
 	elif event.is_action_pressed("zoom_in"):
 		zoom(.5)
 	elif event.is_action_pressed("zoom_out"):
 		zoom(2)
 	elif event.is_action_pressed("reset camera"):
 		reset_camera()
+	
 	elif event.is_action("left click"):
 		left_click_mode_handle(event)
 	elif event.is_action("right click"):
@@ -94,6 +100,9 @@ func _on_clicked(object):
 		npin.pinn_object(object.get_parent()) #TODO: use a pinnable component?
 	elif mouseMode == MouseModes.DRAG:
 		pickup_held(object)
+	elif mouseMode == MouseModes.JOINT:
+		var njoint = spawn_obj(joint)
+		njoint.pinn_object(object.get_parent()) #TODO: use a pinnable component?
 
 func drop_held():
 	if !is_instance_valid(held_object):
@@ -112,7 +121,7 @@ func change_mouse_mode(mode):
 	mouseMode = mode
 	$"CanvasLayer/HSplitContainer/VBoxContainer/HBoxContainer/mouseModeLable".text = MouseModes.keys()[mode]
 
-func spawn_obj(Obj=spawnObj):
+func spawn_obj(Obj=spawnObj) -> Node:
 	var newObj = Obj.instance()
 	newObj.global_position = get_global_mouse_position()
 	add_child(newObj)
