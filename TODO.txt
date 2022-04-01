@@ -1,1 +1,2 @@
 remove gun from m4 svg
+fix bullet bug, when used bullet hit the same bodypart no damage is taken
