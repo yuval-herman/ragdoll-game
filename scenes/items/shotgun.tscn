@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/shotgun.svg" type="Texture" id=1]
+[ext_resource path="res://script components/shootable.tscn" type="PackedScene" id=2]
 [ext_resource path="res://script components/draggable.tscn" type="PackedScene" id=3]
-[ext_resource path="res://script components/shootable.gd" type="Script" id=4]
 
 [node name="shotgun" type="RigidBody2D" groups=["guns"]]
 
@@ -20,6 +20,4 @@ rotation = 1.5708
 
 [node name="draggable" parent="." instance=ExtResource( 3 )]
 
-[node name="shootable" type="Node" parent="."]
-script = ExtResource( 4 )
-muzzle = NodePath("../muzzle")
+[node name="shootable" parent="." instance=ExtResource( 2 )]
