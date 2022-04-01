@@ -40,7 +40,7 @@ func hit(damage, dir):
 	life-=damage
 	bleed(damage, dir)
 
-func get_blood():
+func get_blood() -> CPUParticles2D:
 	currBlood+=1
 	if currBlood == bloodMax:
 		currBlood = 0
@@ -48,15 +48,18 @@ func get_blood():
 
 func bleed(damage, dir):
 	var bl = get_blood()
+	print(bl.emitting)
+	if bl.is_emitting():
+		bl.restart()
 	var amount = int(log(damage))*20
 	if amount < 1:
 		return
 	bl.amount = amount
 	bl.initial_velocity = log(damage)*200
 	bl.spread = damage
-	bl.emitting = true
 	bl.global_position = global_position
 	bl.global_rotation = dir
+	bl.emitting = true
 
 func hit_object(body):
 	if not body.is_in_group("body_part"):
