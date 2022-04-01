@@ -24,3 +24,4 @@ rotation = 1.5708
 
 [node name="shootable" type="Node" parent="."]
 script = ExtResource( 4 )
+bullet = null
