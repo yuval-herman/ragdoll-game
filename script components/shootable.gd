@@ -2,6 +2,9 @@ extends Node
 
 class_name Shootable
 
+export (int) var shootrate
+export (int) var cluster_size
+export (int) var maxBullets #higer is slower
 export (PackedScene) var bullet := preload("res://scenes/bullet.tscn")
 export (NodePath) var muzzle
 
@@ -10,9 +13,6 @@ var wait_frames := 0
 var bulletPool := []
 var currBullet := 0
 
-const shootrate := 30 #bigger=slower
-const cluster_size := 15
-const maxBullets := cluster_size*5
 
 onready var parent := get_parent()
 
