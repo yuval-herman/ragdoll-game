@@ -1,6 +1,9 @@
 extends Node
 
-export (PackedScene) var bullet = preload("res://scenes/bullet.tscn")
+class_name Shootable
+
+export (PackedScene) var bullet := preload("res://scenes/bullet.tscn")
+export (NodePath) var muzzle
 
 var shooting := false
 var wait_frames := 0
@@ -11,7 +14,11 @@ const shootrate := 30 #bigger=slower
 const cluster_size := 15
 const maxBullets := cluster_size*5
 
+onready var parent := get_parent()
+
 func _ready():
+	muzzle = get_node(muzzle)
+	parent.connect("input_event", self, "input_event")
 	for i in maxBullets:
 		bulletPool.append(bullet.instance())
 		bulletPool[i].damage = 10
@@ -28,8 +35,8 @@ func shoot():
 	wait_frames = shootrate
 	for i in cluster_size:
 		var bull = take_bullet()
-		bull.rotation = rotation*rand_range(.98, 1.02)
-		bull.global_position = $muzzle.global_position
+		bull.rotation = parent.rotation*rand_range(.98, 1.02)
+		bull.global_position = muzzle.global_position
 		bull.go()
 
 func take_bullet():
@@ -38,7 +45,7 @@ func take_bullet():
 		currBullet=0
 	return bulletPool[currBullet]
 
-func _input_event(_viewport, event, _shape_idx):
+func input_event(_viewport, event, _shape_idx):
 	if event.is_action_pressed("right click") and wait_frames == 0:
 		shoot()
 		shooting=true
