@@ -1,10 +1,13 @@
 extends RigidBody2D
+
 export var life = 1000
+
 onready var blood = preload("res://scenes/blood.tscn")
 onready var draggable: Draggable = preload("res://script components/draggable.tscn").instance()
+
 var bloods = []
 var currBlood = 0
-const bloodMax = 3
+var bloodMax = 20 #change to lower number for better performance
 
 signal rclicked
 signal died
@@ -44,13 +47,12 @@ func get_blood() -> CPUParticles2D:
 	currBlood+=1
 	if currBlood == bloodMax:
 		currBlood = 0
+	if bloods[currBlood].is_emitting():
+		bloods[currBlood].restart()
 	return bloods[currBlood]
 
 func bleed(damage, dir):
 	var bl = get_blood()
-	print(bl.emitting)
-	if bl.is_emitting():
-		bl.restart()
 	var amount = int(log(damage))*20
 	if amount < 1:
 		return
