@@ -5,3 +5,5 @@
 [node name="shootable" type="Node"]
 script = ExtResource( 1 )
 muzzle = NodePath("../muzzle")
+
+[node name="Timer" type="Timer" parent="."]
