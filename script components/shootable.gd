@@ -9,7 +9,7 @@ export (PackedScene) var bullet := preload("res://scenes/bullet.tscn")
 export (NodePath) var muzzle
 
 var shooting := false
-var wait_frames := 0
+var can_shoot := true
 var bulletPool := []
 var currBullet := 0
 
@@ -17,6 +17,7 @@ var currBullet := 0
 onready var parent := get_parent()
 
 func _ready():
+	$Timer.wait_time = shootrate
 	muzzle = get_node(muzzle)
 	parent.connect("input_event", self, "input_event")
 	for i in maxBullets:
@@ -26,13 +27,12 @@ func _ready():
 		$"/root".call_deferred("add_child" ,bulletPool[i])
 
 func _physics_process(_delta):
-	if wait_frames > 0:
-		wait_frames-=1
-	elif shooting:
+	if shooting and can_shoot:
 		shoot()
 
 func shoot():
-	wait_frames = shootrate
+	can_shoot = false
+	$Timer.start()
 	for i in cluster_size:
 		var bull = take_bullet()
 		bull.rotation = parent.rotation*rand_range(.98, 1.02)
@@ -46,10 +46,13 @@ func take_bullet():
 	return bulletPool[currBullet]
 
 func input_event(_viewport, event, _shape_idx):
-	if event.is_action_pressed("right click") and wait_frames == 0:
+	if event.is_action_pressed("right click") and can_shoot:
 		shoot()
 		shooting=true
 
 func _input(event):
 	if event.is_action_released("right click"):
 		shooting=false
+
+func _on_Timer_timeout():
+	can_shoot = true
