@@ -49,5 +49,7 @@ func input_event(_viewport, event, _shape_idx):
 	if event.is_action_pressed("right click") and wait_frames == 0:
 		shoot()
 		shooting=true
-	elif event.is_action_released("right click"):
+
+func _input(event):
+	if event.is_action_released("right click"):
 		shooting=false
