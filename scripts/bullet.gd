@@ -6,6 +6,9 @@ var lifeFrames = maxLifeFrames
 onready var rot = Vector2.UP.rotated(rotation)
 const bias = 1/60.0
 
+func _init():
+	disapear()
+
 func _physics_process(delta):
 	var db = delta/bias
 	if lifeFrames <= 0:
