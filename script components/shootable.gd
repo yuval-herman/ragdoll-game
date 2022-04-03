@@ -2,7 +2,7 @@ extends Node
 
 class_name Shootable
 
-export (int) var shootrate
+export (float) var shootrate
 export (int) var cluster_size
 export (int) var maxBullets #higer is slower
 export (PackedScene) var bullet := preload("res://scenes/bullet.tscn")
