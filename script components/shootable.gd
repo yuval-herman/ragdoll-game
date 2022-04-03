@@ -10,7 +10,7 @@ export (PackedScene) var bullet := preload("res://scenes/bullet.tscn")
 export (NodePath) var muzzle
 
 var shooting := false
-var can_shoot := true
+var able_to_shoot := true
 var bulletPool := []
 var currBullet := 0
 
@@ -28,11 +28,13 @@ func _ready():
 		$"/root".call_deferred("add_child" ,bulletPool[i])
 
 func _physics_process(_delta):
-	if shooting and can_shoot:
+	if shooting:
 		shoot()
 
 func shoot():
-	can_shoot = false
+	if not able_to_shoot:
+		return
+	able_to_shoot = false
 	$Timer.start()
 	for i in cluster_size:
 		var bull = take_bullet()
@@ -47,7 +49,7 @@ func take_bullet():
 	return bulletPool[currBullet]
 
 func input_event(_viewport, event, _shape_idx):
-	if event.is_action_pressed("right click") and can_shoot:
+	if event.is_action_pressed("right click"):
 		shoot()
 		shooting=true
 
@@ -56,4 +58,4 @@ func _input(event):
 		shooting=false
 
 func _on_Timer_timeout():
-	can_shoot = true
+	able_to_shoot = true
