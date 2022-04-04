@@ -1,1 +1,1 @@
-fix gun input problem
+BUG: spawning and changing mouse mode make endless spawning
