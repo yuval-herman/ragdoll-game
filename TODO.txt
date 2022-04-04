@@ -1,1 +1,2 @@
 BUG: spawning and changing mouse mode make endless spawning
+make dragged objects dragged from point of contact (pin maby?)
