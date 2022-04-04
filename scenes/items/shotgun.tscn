@@ -21,6 +21,8 @@ rotation = 1.5708
 [node name="draggable" parent="." instance=ExtResource( 3 )]
 
 [node name="shootable" parent="." instance=ExtResource( 2 )]
-shootrate = 30
-cluster_size = 15
-maxBullets = 75
+cluster_size = 10
+maxBullets = 50
+shootrate = 1.0
+bulletDamage = 100.0
+knockbackMultiplier = 100.0
