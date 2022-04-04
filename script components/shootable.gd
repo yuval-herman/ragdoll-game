@@ -2,10 +2,11 @@ extends Node
 
 class_name Shootable
 
-export (float) var shootrate
 export (int) var cluster_size
 export (int) var maxBullets
+export (float) var shootrate
 export (float) var bulletDamage
+export (float) var knockbackMultiplier = 1
 export (PackedScene) var bullet := preload("res://scenes/bullet.tscn")
 export (NodePath) var muzzle
 
@@ -41,6 +42,10 @@ func shoot():
 		bull.rotation = parent.rotation*rand_range(.98, 1.02)
 		bull.global_position = muzzle.global_position
 		bull.go()
+	knockback()
+
+func knockback():
+	parent.set_axis_velocity(Vector2.DOWN.rotated(parent.rotation)*cluster_size*knockbackMultiplier)
 
 func take_bullet():
 	currBullet+=1
