@@ -117,6 +117,7 @@ func pickup_held(obj):
 	held_object.pickup()
 
 func change_mouse_mode(mode):
+	spawning = false #TODO need to find better solution
 	drop_held()
 	mouseMode = mode
 	$"CanvasLayer/HSplitContainer/VBoxContainer/HBoxContainer/mouseModeLable".text = MouseModes.keys()[mode]
