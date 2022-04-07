@@ -1,2 +1,4 @@
 make objects that go out of bounds disapear
 make dragged objects dragged from point of contact (pin maby?)
+remove high speed
+FIX objects falling through floor
