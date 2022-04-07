@@ -28,3 +28,8 @@ static func dir_contents(path) -> Array:
 	else:
 		print("An error occurred when trying to access the path.")
 	return files
+
+static func is_in_rectangle(upleft: Vector2, downright: Vector2, pos: Vector2) -> bool:
+	if pos.x < downright.x and pos.x > upleft.x and pos.y > upleft.y and pos.y < downright.y:
+		return true
+	return false
