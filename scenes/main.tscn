@@ -53,7 +53,7 @@ pause_mode = 2
 script = ExtResource( 4 )
 
 [node name="ragdoll" parent="." instance=ExtResource( 2 )]
-position = Vector2( 250, 123 )
+position = Vector2( 80, 40 )
 
 [node name="TileMap" type="TileMap" parent="." groups=["ground"]]
 tile_set = SubResource( 1 )
@@ -106,5 +106,10 @@ auto_height = true
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="Timer" type="Timer" parent="."]
+process_mode = 0
+autostart = true
+
 [connection signal="item_selected" from="CanvasLayer/HSplitContainer/VBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="tween_step" from="Tween" to="." method="_on_Tween_tween_step"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
