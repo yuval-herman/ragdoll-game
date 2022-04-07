@@ -1,6 +1,7 @@
 extends Node2D
 
 const spawRate = 10 # higer is slower
+const BOUNDS = [Vector2(-4000, -1600), Vector2(7000, 1600)]
 
 enum MouseModes {DRAG, PIN, SPAWN, JOINT, BOX}
 
@@ -166,6 +167,12 @@ func toggle_slomo():
 	$CanvasLayer/HSplitContainer/VBoxContainer/HBoxContainer/speedlabel.text = str(Engine.time_scale)
 	is_slomo = !is_slomo
 
+func remove_out_of_bounds():
+	for child in get_children():
+		if child.get_class() == "RigidBody2D": #TODO FIXME temporary solution!!!
+			if not Helpers.is_in_rectangle(BOUNDS[0], BOUNDS[1], child.global_position):
+				child.queue_free()
+
 
 func _on_Tween_tween_step(object, key, elapsed, value):
 	if object == Engine:
@@ -174,3 +181,7 @@ func _on_Tween_tween_step(object, key, elapsed, value):
 
 func _on_ItemList_item_selected(index):
 	spawnObj=load(items[index]) # use ResourceLoader if problems arise...
+
+
+func _on_Timer_timeout():
+	remove_out_of_bounds()
